@@ -1,16 +1,15 @@
 var express = require("express");
 var app = express();
 const bodyParser = require("body-parser");
-const router = express.Router();
 app.use(bodyParser.json())
 
-require('./app/routes/customer.routes.js')(app);
 
 app.listen(3000,() => {
     console.log("Started on PORT 3000");
   })
 
 
+  
 var dogsArr = [];
 app.get("/dogs", (req, res, next) => {
     res.json(dogsArr);
@@ -39,9 +38,6 @@ app.put("/dogs/:dogsId", (req, res, next)=>{
     });
   });
 
-
-
-
   app.delete("/dogs/:dogsId", (req, res, next)=>{
     var index;
     dogsArr.forEach(ele=>{
@@ -51,7 +47,8 @@ app.put("/dogs/:dogsId", (req, res, next)=>{
          index = ele.id;
       } 
     });
-    dogsArr = dogsArr.splice(index,1);
+    
+    dogsArr.splice(index - 1,1);
     res.json({
       message: "Completed a task!",
       dogsArr : dogsArr
